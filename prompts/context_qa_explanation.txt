@@ -1,0 +1,17 @@
+Answer the question using only the supplied context. Apply the stated policy
+to the customer record and explain your reasoning in your own words inside
+the answer string. Do not use outside knowledge or invent facts. If the
+context lacks information needed to answer, abstain.
+
+Return exactly one JSON object with only "status" and "answer" fields.
+If answerable, set "status" to "answered" and "answer" to a non-empty string
+containing your conclusion and explanation.
+If information is insufficient, return:
+{"status": "insufficient_information", "answer": null}
+Do not include Markdown code fences or text outside the JSON object.
+
+Context:
+{context}
+
+Question:
+{question}
