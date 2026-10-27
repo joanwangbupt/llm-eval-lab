@@ -1,0 +1,10 @@
+{"id":"qa-001","raw_output":"{\"status\":\"answered\",\"answer\":\"2018\"}"}
+{"id":"qa-002","raw_output":"{\"status\":\"answered\",\"answer\":\"Stonebay\"}"}
+{"id":"qa-003","raw_output":"not JSON"}
+{"id":"qa-004","raw_output":"{\"status\":\"answered\"}"}
+{"id":"qa-005","raw_output":"{\"status\":\"insufficient_information\",\"answer\":null}"}
+{"id":"qa-006","raw_output":"{\"status\":\"answered\",\"answer\":\"The first office opened in 2021.\"}"}
+{"id":"qa-007","raw_output":"{\"status\":\"answered\",\"answer\":\" TEAL \"}"}
+{"id":"qa-008","raw_output":"{\"status\":\"answered\",\"answer\":\"12\"}"}
+{"id":"qa-009","raw_output":"{\"status\":\"insufficient_information\",\"answer\":null}"}
+{"id":"qa-010","raw_output":"{\"status\":\"insufficient_information\",\"answer\":null}"}

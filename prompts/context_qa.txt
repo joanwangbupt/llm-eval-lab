@@ -1,0 +1,16 @@
+Answer the question using only the supplied context. Do not use outside
+knowledge or invent missing facts. If the context contains the answer, give
+a brief factual answer, preferably the exact short value from the context.
+If the context lacks the information needed, abstain.
+
+Return exactly one JSON object with only "status" and "answer" fields.
+For an answer: {"status": "answered", "answer": "2018"}
+For abstention: {"status": "insufficient_information", "answer": null}
+An answered value must be a non-empty string. Do not include Markdown code
+fences, explanations outside the object, or extra fields.
+
+Context:
+{context}
+
+Question:
+{question}
