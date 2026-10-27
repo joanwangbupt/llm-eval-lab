@@ -7,9 +7,38 @@ wheels/
 *.egg-info
 
 # Virtual environments
-.venv
+.venv/
+venv/
+env/
 
 .env
+.env.*
+!.env.example
+
+# Test, type-checker, and evaluation caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.cache/
+.coverage
+.coverage.*
+htmlcov/
+.deepeval*/
+.deepeval*.json
+.deepeval*.txt
+*.log
+
+# Local credentials, agent settings, editors, and OS files
+/.aws/
+/.codex/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
 
 results/runs/*
 !results/runs/.gitkeep
