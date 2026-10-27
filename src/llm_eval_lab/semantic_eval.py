@@ -94,7 +94,7 @@ def main(argv=None):
         return 2
     print("DeepEval Metric: Semantic Correctness")
     print(f"Judge Model: {args.judge_model}")
-    print("Limit: same-model Judge is not objective ground truth.", flush=True)
+    print("Limit: LLM Judge may be biased; scores are not objective ground truth.", flush=True)
     try:
         semantic_score, reason = measure_semantic(
             test_case, judge_model=args.judge_model, api_base=args.api_base,

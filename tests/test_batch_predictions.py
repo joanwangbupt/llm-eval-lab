@@ -5,9 +5,9 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from types import SimpleNamespace
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
-from llm_eval_lab.batch_predictions import render_prompt, run_batch
+from llm_eval_lab.batch_predictions import main, render_prompt, run_batch
 from llm_eval_lab.deterministic import evaluate, load_dataset, load_predictions
 
 
@@ -118,6 +118,29 @@ class BatchPredictionTests(unittest.TestCase):
             with self.assertRaises(FileExistsError):
                 self.run_in(directory)
             self.client.generate.assert_not_called()
+
+    def test_reasoning_saved_without_changing_prediction(self):
+        self.client.generate.return_value.reasoning_content = "Separate thinking\n"
+        raw = self.client.generate.return_value.output
+        with TemporaryDirectory() as directory:
+            self.run_in(directory, self.cases[:1])
+            path = Path(directory) / "run"
+            self.assertEqual(load_predictions(path / "predictions.jsonl")["qa-001"], raw)
+            metadata = json.loads((path / "metadata.jsonl").read_text())
+            self.assertEqual(metadata["reasoning_content"], "Separate thinking\n")
+
+    def test_cli_selects_qwen_from_existing_config(self):
+        import os
+        with patch.dict(os.environ, {"LITELLM_LOCAL_MODEL_COST_MAP": "True"}), \
+             patch("llm_eval_lab.llm_client.LLMClient", return_value=self.client), \
+             TemporaryDirectory() as directory, redirect_stdout(StringIO()):
+            main(["--model-key", "qwen3_8_27b", "--dataset", str(ROOT / "datasets/refund_case_v1.jsonl"),
+                  "--prompt", str(ROOT / "prompts/context_qa_explanation.txt"),
+                  "--output-dir", str(Path(directory) / "run"),
+                  "--api-base", "http://localhost:11434"])
+        self.client.generate.assert_called_once()
+        self.assertEqual(self.client.generate.call_args.kwargs["model"], "ollama_chat/qwen3.8:27b")
+        self.assertEqual(self.client.generate.call_args.kwargs["temperature"], 0)
 
 
 if __name__ == "__main__":

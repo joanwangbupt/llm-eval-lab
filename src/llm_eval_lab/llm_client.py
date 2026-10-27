@@ -12,9 +12,13 @@ class LLMResult:
     prompt_tokens: int | None
     completion_tokens: int | None
     total_tokens: int | None
+    reasoning_content: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+        result = asdict(self)
+        if self.reasoning_content is None:
+            result.pop("reasoning_content")
+        return result
 
 
 class LLMClient:
@@ -50,4 +54,5 @@ class LLMClient:
             prompt_tokens=getattr(usage, "prompt_tokens", None),
             completion_tokens=getattr(usage, "completion_tokens", None),
             total_tokens=getattr(usage, "total_tokens", None),
+            reasoning_content=getattr(response.choices[0].message, "reasoning_content", None),
         )

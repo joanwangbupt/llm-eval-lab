@@ -125,6 +125,14 @@ class LLMClientTests(unittest.TestCase):
         self.assertEqual(result.latency_seconds, 8.11)
         self.assertEqual(self.clock.call_count, 2)
 
+    def test_reasoning_preserved_separately_from_final_output(self):
+        message = self.completion.return_value.choices[0].message
+        message.reasoning_content = "Compare the supplied dates.\n"
+        message.content = ' {"status":"answered","answer":"Yes"}\n'
+        result = LLMClient().generate(model="test-model", prompt="Question")
+        self.assertEqual(result.output, message.content)
+        self.assertEqual(result.to_dict()["reasoning_content"], message.reasoning_content)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -60,6 +60,7 @@ def run_batch(cases, template, *, client, model_config, api_base, output_dir):
                 "prompt_tokens": result.prompt_tokens,
                 "completion_tokens": result.completion_tokens,
                 "total_tokens": result.total_tokens,
+                "reasoning_content": getattr(result, "reasoning_content", None),
             }) + "\n")
             metadata.flush()
             successful.append(case)

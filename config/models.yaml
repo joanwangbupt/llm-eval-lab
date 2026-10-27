@@ -2,4 +2,7 @@ models:
   gemma4_12b:
     model: ollama_chat/gemma4:26b-a4b-it-qat
     temperature: 0
+  qwen3_8_27b:
+    model: ollama_chat/qwen3.8:27b
+    temperature: 0
     
